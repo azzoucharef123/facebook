@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum BotMode {
+  all_posts
+  single_post
+}
+
+enum BotLogLevel {
+  info
+  warn
+  error
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model BotSettings {
+  id                 Int      @id
+  pageId             String   @default("")
+  pageAccessToken    String?
+  intervalSeconds    Int      @default(60)
+  mode               BotMode  @default(all_posts)
+  postId             String?
+  replyText          String   @default("")
+  keywords           String[] @default([])
+  processOldComments Boolean  @default(false)
+  sendPrivateMessage Boolean  @default(false)
+  autoLike           Boolean  @default(false)
+  isEnabled          Boolean  @default(false)
+  enabledAt          DateTime?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+model ProcessedComment {
+  id            String   @id @default(cuid())
+  commentId     String   @unique
+  postId        String
+  commenterName String
+  message       String
+  repliedAt     DateTime
+  createdAt     DateTime @default(now())
+}
+
+model BotLog {
+  id        String      @id @default(cuid())
+  level     BotLogLevel
+  message   String
+  metaJson  Json?
+  createdAt DateTime    @default(now())
+}
+
+model WorkerLock {
+  key        String   @id
+  ownerId    String?
+  lockedAt   DateTime?
+  lockedUntil DateTime?
+  updatedAt  DateTime @updatedAt
+}

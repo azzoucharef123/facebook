@@ -18,14 +18,14 @@ async function main() {
   }
 
   const email = normalizeEmail(rawEmail);
-  const password = await bcrypt.hash(rawPassword, 12);
+  const passwordHash = await bcrypt.hash(rawPassword, 12);
 
   await prisma.user.upsert({
     where: { email },
-    update: { password },
+    update: { passwordHash },
     create: {
       email,
-      password
+      passwordHash
     }
   });
 

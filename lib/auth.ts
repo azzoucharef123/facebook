@@ -24,7 +24,7 @@ export async function authenticateUser(email: string, password: string) {
     return null;
   }
 
-  const isPasswordValid = await bcrypt.compare(password, user.password);
+  const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
   if (!isPasswordValid) {
     return null;
   }
@@ -104,3 +104,4 @@ export async function getApiUser(request: NextRequest) {
     return null;
   }
 }
+

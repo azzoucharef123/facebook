@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "prisma db push && next start",
+    "start": "prisma db push && tsx prisma/seed.ts && next start",
     "worker": "tsx worker.ts",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate deploy",

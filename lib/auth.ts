@@ -24,7 +24,7 @@ export async function authenticateUser(email: string, password: string) {
     return null;
   }
 
-  const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+  const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
     return null;
   }

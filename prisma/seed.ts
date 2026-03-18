@@ -1,8 +1,13 @@
 import "dotenv/config";
 
 import bcrypt from "bcrypt";
-import prisma from "../lib/prisma";
-import { normalizeEmail } from "../lib/utils";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+function normalizeEmail(email: string) {
+  return email.trim().toLowerCase();
+}
 
 async function main() {
   const rawEmail = process.env.ADMIN_EMAIL;
@@ -13,14 +18,14 @@ async function main() {
   }
 
   const email = normalizeEmail(rawEmail);
-  const passwordHash = await bcrypt.hash(rawPassword, 12);
+  const password = await bcrypt.hash(rawPassword, 12);
 
   await prisma.user.upsert({
     where: { email },
-    update: { passwordHash },
+    update: { password },
     create: {
       email,
-      passwordHash
+      password
     }
   });
 

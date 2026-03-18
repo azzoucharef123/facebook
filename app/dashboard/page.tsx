@@ -5,6 +5,8 @@ import { DashboardShell } from "@/components/dashboard-shell";
 import { LogoutButton } from "@/components/logout-button";
 import { getBotRuntimeStatus } from "@/lib/worker";
 
+export const dynamic = "force-dynamic";
+
 const PAGE_SIZE = 10;
 
 export default async function DashboardPage({ searchParams }: { searchParams?: { page?: string } }) {

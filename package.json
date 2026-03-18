@@ -5,13 +5,13 @@
   "description": "Facebook Page comment bot manager built with Next.js, Prisma, and Railway-friendly worker support.",
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
-    "start": "prisma db push && prisma db seed && next start",
+    "build": "next build",
+    "start": "prisma db push && next start",
     "worker": "tsx worker.ts",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate deploy",
     "prisma:migrate:dev": "prisma migrate dev",
-    "prisma:seed": "prisma db seed",
+    "prisma:seed": "tsx prisma/seed.ts",
     "lint": "next lint",
     "postinstall": "prisma generate"
   },
@@ -45,6 +45,6 @@
     "typescript": "^5.8.2"
   },
   "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts"
   }
 }
